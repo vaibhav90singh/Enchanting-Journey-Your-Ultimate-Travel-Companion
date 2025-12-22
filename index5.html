@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Kashi Chronicles - Singh's Tours & Travels Blog</title>
+  <meta name="title" content="Kashi Chronicles - Stories from Varanasi">
+  <meta name="description" content="Explore the spiritual journey, hidden ghats, and divine stories of Varanasi through our blog.">
+
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <style>
+    /* -------------------------------------------------------------------------
+      CUSTOM BLOG STYLES (To match the Vibe exactly)
+      -------------------------------------------------------------------------
+    */
+
+    :root {
+      --gold-1: #e4c590;
+      --gold-2: #d8b780;
+      --black-1: #0e0e10; /* Darker background */
+      --black-2: #16171b; /* Card background */
+      --black-3: #1f2025; /* Hover background */
+      --white: #ffffff;
+      --gray: #bababa;
+      --font-heading: 'Forum', cursive;
+      --font-body: 'DM Sans', sans-serif;
+      --transition: 0.4s ease-in-out;
+    }
+
+    /* Base Overrides for Consistency */
+    body {
+      background-color: var(--black-1);
+      color: var(--gray);
+      font-family: var(--font-body);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      color: var(--white);
+      letter-spacing: 1px;
+    }
+
+    /* --- Blog Hero Section --- */
+    .blog-hero {
+      position: relative;
+      height: 60vh;
+      min-height: 500px;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('./assets/images/hero-slider-3.jpg') no-repeat center center/cover;
+      background-attachment: fixed; /* Parallax Effect */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin-top: 100px; /* Space for fixed header */
+      overflow: hidden;
+    }
+
+    .blog-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(to top, var(--black-1), transparent);
+    }
+
+    .blog-hero-content {
+      z-index: 2;
+      animation: fadeUp 1s ease forwards;
+    }
+
+    .blog-subtitle {
+      color: var(--gold-1);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .blog-title {
+      font-size: clamp(40px, 5vw, 80px);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    /* --- Main Layout --- */
+    .blog-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 15px;
+      display: grid;
+      grid-template-columns: 2fr 1fr; /* Content vs Sidebar */
+      gap: 50px;
+    }
+
+    @media (max-width: 992px) {
+      .blog-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* --- Blog Cards --- */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .blog-card {
+      background-color: var(--black-2);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: var(--transition);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(228, 197, 144, 0.1);
+      border-color: var(--gold-1);
+    }
+
+    .blog-img-box {
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .blog-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .blog-card:hover .blog-img {
+      transform: scale(1.1);
+    }
+
+    .date-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: var(--gold-1);
+      color: var(--black-1);
+      padding: 5px 15px;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      border-radius: 2px;
+      z-index: 2;
+    }
+
+    .blog-content {
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .blog-meta {
+      display: flex;
+      gap: 15px;
+      font-size: 13px;
+      color: var(--gold-1);
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .blog-card-title {
+      font-size: 24px;
+      margin-bottom: 15px;
+      line-height: 1.3;
+      transition: color 0.3s;
+    }
+
+    .blog-card-title a {
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .blog-card:hover .blog-card-title a {
+      color: var(--gold-1);
+    }
+
+    .blog-text {
+      margin-bottom: 25px;
+      line-height: 1.7;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .read-more-btn {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--gold-1);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 2px;
+      transition: gap 0.3s;
+    }
+
+    .read-more-btn:hover {
+      gap: 10px;
+    }
+
+    /* --- Sidebar --- */
+    .sidebar-widget {
+      background-color: var(--black-2);
+      padding: 40px;
+      margin-bottom: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 2px;
+    }
+
+    .widget-title {
+      font-size: 22px;
+      margin-bottom: 30px;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .widget-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background-color: var(--gold-1);
+    }
+
+    /* Search Box */
+    .search-form {
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 15px;
+      color: var(--white);
+      font-family: var(--font-body);
+    }
+    .search-input:focus {
+      border-color: var(--gold-1);
+      outline: none;
+    }
+    .search-btn {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold-1);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Categories List */
+    .cat-list li {
+      margin-bottom: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      transition: 0.3s;
+    }
+    .cat-list li:last-child { border: none; padding-bottom: 0; }
+    .cat-list a { color: var(--gray); font-size: 15px; }
+    .cat-list li:hover a { color: var(--gold-1); padding-left: 10px; }
+    .cat-count { color: var(--gold-1); font-size: 12px; }
+
+    /* Recent Posts */
+    .recent-post-card {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+    .recent-thumb {
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .recent-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .recent-info h4 {
+      font-size: 16px;
+      margin-bottom: 5px;
+      line-height: 1.4;
+    }
+    .recent-info h4 a { color: var(--white); transition: 0.3s; }
+    .recent-info h4 a:hover { color: var(--gold-1); }
+    .recent-date { font-size: 12px; color: var(--gray); }
+
+    /* Tags */
+    .tags-list { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tag-btn {
+      padding: 8px 20px;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--gray);
+      font-size: 12px;
+      text-transform: uppercase;
+      transition: 0.3s;
+    }
+    .tag-btn:hover {
+      background-color: var(--gold-1);
+      color: var(--black-1);
+      border-color: var(--gold-1);
+    }
+
+    /* --- Pagination --- */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 60px;
+    }
+    .page-btn {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      font-family: var(--font-heading);
+      font-size: 18px;
+      transition: 0.3s;
+    }
+    .page-btn.active, .page-btn:hover {
+      background-color: var(--gold-1);
+      color: var(--black-1);
+      border-color: var(--gold-1);
+    }
+
+    /* --- Newsletter Box --- */
+    .newsletter-box {
+      background: linear-gradient(135deg, var(--black-2) 0%, #2a2c33 100%);
+      text-align: center;
+      padding: 60px;
+      margin-top: 50px;
+      border: 1px solid var(--gold-1);
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter-box::before {
+      content: '';
+      position: absolute;
+      top: -50px; left: -50px;
+      width: 100px; height: 100px;
+      background: var(--gold-1);
+      filter: blur(80px);
+      opacity: 0.2;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal-card {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+    .reveal-card.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+  </style>
+
+</head>
+
+<body id="top">
+
+  <div class="preload" data-preaload>
+    <div class="circle"></div>
+    <p class="text">Singh's</p>
+  </div>
+
+  <div class="topbar">
+    <div class="container">
+      <address class="topbar-item">
+        <div class="icon"><ion-icon name="location-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">Kalkaji, New Delhi, Delhi</span>
+      </address>
+      <div class="separator"></div>
+      <div class="topbar-item item-2">
+        <div class="icon"><ion-icon name="time-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">Daily : 10.00 am to 10.00 pm</span>
+      </div>
+      <a href="tel:+11234567890" class="topbar-item link">
+        <div class="icon"><ion-icon name="call-outline" aria-hidden="true"></ion-icon></div>
+        <span class="span">+91 859 505 1278</span>
+      </a>
+    </div>
+  </div>
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <a href="index.html" class="logo">
+        <img src="./assets/images/Vaibhav-Singh-1--unscreen.gif" width="160" height="50" alt="Singh's Logo">
+      </a>
+
+      <nav class="navbar" data-navbar>
+        <button class="close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+
+        <a href="index.html" class="logo">
+          <img src="./assets/images/logo.svg" width="160" height="50" alt="Grilli - Home">
+        </a>
+
+        <ul class="navbar-list">
+          <li class="navbar-item"><a href="index.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Home</span></a></li>
+          <li class="navbar-item"><a href="index.html#menu" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Aarti Booking</span></a></li>
+          <li class="navbar-item"><a href="index.html#about" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Festive Events</span></a></li>
+          <li class="navbar-item"><a href="#" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Transports</span></a></li>
+          <li class="navbar-item"><a href="#" class="navbar-link hover-underline active"><div class="separator"></div><span class="span">Blogs</span></a></li>
+        </ul>
+
+        <div class="text-center">
+          <p class="headline-1 navbar-title">Visit Us</p>
+          <address class="body-4">Kalkaji, New Delhi <br> Delhi - 110019</address>
+          <p class="body-4 navbar-text">Open: 9.30 am - 2.30pm</p>
+          <a href="mailto:booking@singhtourstravels.com" class="body-4 sidebar-link">booking@singhtourstravels.com</a>
+        </div>
+      </nav>
+
+      <a href="#" class="btn btn-secondary">
+        <span class="text text-1">Find A Tour Package</span>
+        <span class="text text-2" aria-hidden="true">Find A Tour Package</span>
+      </a>
+
+      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
+        <span class="line line-3"></span>
+      </button>
+
+      <div class="overlay" data-nav-toggler data-overlay></div>
+    </div>
+  </header>
+
+  <main>
+    <article>
+
+      <section class="blog-hero">
+        <div class="blog-hero-content">
+          <p class="blog-subtitle">Singh's Travel Diaries</p>
+          <h1 class="headline-1 blog-title">Echoes of Kashi</h1>
+          <p class="body-2" style="max-width: 600px; margin: 0 auto;">
+            Discover the myths, the history, and the divine energy that flows through the oldest living city on Earth.
+          </p>
+          <div style="margin-top: 40px;">
+             <ion-icon name="chevron-down-outline" style="font-size: 30px; color: var(--gold-1); animation: bounce 2s infinite;"></ion-icon>
+          </div>
+        </div>
+      </section>
+
+
+      <div class="blog-container">
+
+        <div class="content-col">
+          
+          <div class="blog-grid">
+
+            <div class="blog-card reveal-card">
+              <div class="blog-img-box">
+                <img src="./assets/images/hero-slider-2.jpg" loading="lazy" alt="Ganga Aarti View" class="blog-img">
+                <div class="date-badge">12 Oct</div>
+              </div>
+              <div class="blog-content">
+                <div class="blog-meta">
+                  <span><ion-icon name="person-outline"></ion-icon> Vaibhav Singh</span>
+                  <span><ion-icon name="folder-outline"></ion-icon> Spiritual</span>
+                </div>
+                <h3 class="title-3 blog-card-title"><a href="#">The Divine Symphony of Ganga Aarti</a></h3>
+                <p class="body-4 blog-text">
+                  As the sun sets over the Ganges, the air fills with the sound of chants and conch shells. Witnessing the Ganga Aarti at Dashashwamedh Ghat is not just a ritual; it is a celestial experience that transcends time...
+                </p>
+                <a href="#" class="read-more-btn">Read Full Story <ion-icon name="arrow-forward-outline"></ion-icon></a>
+              </div>
+            </div>
+
+            <div class="blog-card reveal-card" style="transition-delay: 0.1s;">
+              <div class="blog-img-box">
+                <img src="./assets/images/kashitemple.jpg" loading="lazy" alt="Kashi Vishwanath Corridor" class="blog-img">
+                <div class="date-badge">05 Oct</div>
+              </div>
+              <div class="blog-content">
+                <div class="blog-meta">
+                  <span><ion-icon name="person-outline"></ion-icon> Admin</span>
+                  <span><ion-icon name="folder-outline"></ion-icon> Heritage</span>
+                </div>
+                <h3 class="title-3 blog-card-title"><a href="#">New Corridor: Blending Ancient with Modern</a></h3>
+                <p class="body-4 blog-text">
+                  The newly inaugurated Kashi Vishwanath Corridor has transformed the pilgrim experience. Walk through the majestic pathways that connect the holy river directly to the sanctum sanctorum...
+                </p>
+                <a href="#" class="read-more-btn">Read Full Story <ion-icon name="arrow-forward-outline"></ion-icon></a>
+              </div>
+            </div>
+
+            <div class="blog-card reveal-card" style="transition-delay: 0.2s;">
+              <div class="blog-img-box">
+                <img src="./assets/images/service-2.avif" loading="lazy" alt="Varanasi Food" class="blog-img">
+                <div class="date-badge">28 Sep</div>
+              </div>
+              <div class="blog-content">
+                <div class="blog-meta">
+                  <span><ion-icon name="person-outline"></ion-icon> Foodie</span>
+                  <span><ion-icon name="folder-outline"></ion-icon> Cuisine</span>
+                </div>
+                <h3 class="title-3 blog-card-title"><a href="#">A Gastronomic Walk Through the Galis</a></h3>
+                <p class="body-4 blog-text">
+                  From the frothy Malaiyo in winter to the spicy Kachori-Sabzi in the morning, Varanasi is a food lover's paradise. Join us as we explore the hidden culinary gems of the narrow alleys...
+                </p>
+                <a href="#" class="read-more-btn">Read Full Story <ion-icon name="arrow-forward-outline"></ion-icon></a>
+              </div>
+            </div>
+
+             <div class="blog-card reveal-card">
+              <div class="blog-img-box">
+                <img src="./assets/images/hero-slider-1.jpg" loading="lazy" alt="Morning Boat Ride" class="blog-img">
+                <div class="date-badge">15 Sep</div>
+              </div>
+              <div class="blog-content">
+                <div class="blog-meta">
+                  <span><ion-icon name="person-outline"></ion-icon> Vaibhav Singh</span>
+                  <span><ion-icon name="folder-outline"></ion-icon> Lifestyle</span>
+                </div>
+                <h3 class="title-3 blog-card-title"><a href="#">Subah-e-Banaras: The Morning Magic</a></h3>
+                <p class="body-4 blog-text">
+                  There is a saying that evenings of Lucknow and mornings of Banaras are incomparable. Experience the rising sun from a boat in the middle of the river Ganga...
+                </p>
+                <a href="#" class="read-more-btn">Read Full Story <ion-icon name="arrow-forward-outline"></ion-icon></a>
+              </div>
+            </div>
+
+            <div class="blog-card reveal-card" style="transition-delay: 0.1s;">
+              <div class="blog-img-box">
+                <img src="./assets/images/mahashivratri.jpg" loading="lazy" alt="Sadhu Varanasi" class="blog-img">
+                <div class="date-badge">01 Sep</div>
+              </div>
+              <div class="blog-content">
+                <div class="blog-meta">
+                  <span><ion-icon name="person-outline"></ion-icon> Pilgrim</span>
+                  <span><ion-icon name="folder-outline"></ion-icon> Culture</span>
+                </div>
+                <h3 class="title-3 blog-card-title"><a href="#">The Aghoris and Mystics of Kashi</a></h3>
+                <p class="body-4 blog-text">
+                  Varanasi attracts seekers from all over the world. Learn about the ascetics, the sadhus, and the philosophy of life and death that is uniquely celebrated here...
+                </p>
+                <a href="#" class="read-more-btn">Read Full Story <ion-icon name="arrow-forward-outline"></ion-icon></a>
+              </div>
+            </div>
+
+            <div class="blog-card reveal-card" style="transition-delay: 0.2s;">
+              <div class="blog-img-box">
+                <img src="./assets/images/diwali.avif" loading="lazy" alt="Dev Diwali" class="blog-img">
+                <div class="date-badge">20 Aug</div>
+              </div>
+              <div class="blog-content">
+                <div class="blog-meta">
+                  <span><ion-icon name="person-outline"></ion-icon> Event Team</span>
+                  <span><ion-icon name="folder-outline"></ion-icon> Festivals</span>
+                </div>
+                <h3 class="title-3 blog-card-title"><a href="#">Preparing for Dev Diwali 2024</a></h3>
+                <p class="body-4 blog-text">
+                  When the Gods descend to Earth. A guide on how to book the best boats and spots to witness the ghats lit up with a million earthen lamps...
+                </p>
+                <a href="#" class="read-more-btn">Read Full Story <ion-icon name="arrow-forward-outline"></ion-icon></a>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="pagination">
+            <a href="#" class="page-btn"><ion-icon name="chevron-back-outline"></ion-icon></a>
+            <a href="#" class="page-btn active">1</a>
+            <a href="#" class="page-btn">2</a>
+            <a href="#" class="page-btn">3</a>
+            <a href="#" class="page-btn"><ion-icon name="chevron-forward-outline"></ion-icon></a>
+          </div>
+
+        </div>
+
+        <aside class="sidebar">
+
+          <div class="sidebar-widget">
+            <h3 class="headline-1 widget-title">Search</h3>
+            <form class="search-form">
+              <input type="text" class="search-input" placeholder="Search Kashi...">
+              <button type="submit" class="search-btn"><ion-icon name="search-outline"></ion-icon></button>
+            </form>
+          </div>
+
+          <div class="sidebar-widget">
+            <h3 class="headline-1 widget-title">Categories</h3>
+            <ul class="cat-list">
+              <li><a href="#">Spiritual & Temples</a> <span class="cat-count">(12)</span></li>
+              <li><a href="#">Ghats History</a> <span class="cat-count">(08)</span></li>
+              <li><a href="#">Banarasi Cuisine</a> <span class="cat-count">(05)</span></li>
+              <li><a href="#">Festivals & Events</a> <span class="cat-count">(03)</span></li>
+              <li><a href="#">Travel Tips</a> <span class="cat-count">(07)</span></li>
+            </ul>
+          </div>
+
+          <div class="sidebar-widget">
+            <h3 class="headline-1 widget-title">Recent Posts</h3>
+            
+            <div class="recent-post-card">
+              <div class="recent-thumb">
+                <img src="./assets/images/icon2.avif" alt="Culture">
+              </div>
+              <div class="recent-info">
+                <h4><a href="#">Why Sarnath is a must visit nearby.</a></h4>
+                <span class="recent-date">Oct 10, 2024</span>
+              </div>
+            </div>
+
+            <div class="recent-post-card">
+              <div class="recent-thumb">
+                <img src="./assets/images/icon3.avif" alt="Spiritual">
+              </div>
+              <div class="recent-info">
+                <h4><a href="#">Best time to visit Kashi Vishwanath.</a></h4>
+                <span class="recent-date">Sep 28, 2024</span>
+              </div>
+            </div>
+
+            <div class="recent-post-card">
+              <div class="recent-thumb">
+                <img src="./assets/images/train.jpg" alt="Travel">
+              </div>
+              <div class="recent-info">
+                <h4><a href="#">Vande Bharat Express Guide.</a></h4>
+                <span class="recent-date">Sep 15, 2024</span>
+              </div>
+            </div>
+            
+          </div>
+
+          <div class="sidebar-widget">
+            <h3 class="headline-1 widget-title">Popular Tags</h3>
+            <div class="tags-list">
+              <a href="#" class="tag-btn">Ghats</a>
+              <a href="#" class="tag-btn">Ganga</a>
+              <a href="#" class="tag-btn">Aarti</a>
+              <a href="#" class="tag-btn">Food</a>
+              <a href="#" class="tag-btn">Yoga</a>
+              <a href="#" class="tag-btn">History</a>
+              <a href="#" class="tag-btn">Mahadev</a>
+              <a href="#" class="tag-btn">Silk</a>
+            </div>
+          </div>
+
+          <div class="sidebar-widget" style="padding: 0; border: none;">
+             <div class="service-card" style="text-align: center; background: var(--black-2); padding: 30px;">
+                <h3 class="headline-1 card-title" style="margin-bottom: 15px;">Plan Your Trip?</h3>
+                <p class="body-4" style="margin-bottom: 20px;">Let Singh's Tours handle your itinerary while you soak in the spirituality.</p>
+                <a href="index.html#reservation" class="btn btn-primary">
+                  <span class="text text-1">Book Now</span>
+                  <span class="text text-2" aria-hidden="true">Book Now</span>
+                </a>
+             </div>
+          </div>
+
+        </aside>
+
+      </div>
+
+      <section class="container">
+        <div class="newsletter-box text-center">
+          <p class="section-subtitle label-2">Stay Connected</p>
+          <h2 class="headline-1 section-title">Subscribe for Sacred Updates</h2>
+          <p class="body-3" style="max-width: 500px; margin: 0 auto 30px auto; color: var(--gray);">
+            Get the latest stories, festival dates, and travel offers delivered straight to your inbox.
+          </p>
+          <form style="max-width: 500px; margin: 0 auto; display: flex; gap: 10px;">
+            <input type="email" placeholder="Your Email Address" style="width: 100%; padding: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white;">
+            <button type="submit" class="btn btn-secondary">
+              <span class="text text-1">Join</span>
+              <span class="text text-2" aria-hidden="true">Join</span>
+            </button>
+          </form>
+        </div>
+      </section>
+      <br><br>
+
+    </article>
+  </main>
+
+
+  <footer class="footer section has-bg-image text-center"
+    style="background-image: url('./assets/images/kashifooter.avif')">
+    <div class="container">
+
+      <div class="footer-top grid-list">
+
+        <div class="footer-brand has-before has-after">
+          <a href="#" class="logo">
+            <img src="./assets/images/Vaibhav Singh.gif" width="160" height="50" loading="lazy" alt="grilli home">
+          </a>
+          <address class="body-4">Kalkaji, New Delhi, Delhi - 110019</address>
+          <a href="mailto:booking@singhtourstravels.com" class="body-4 contact-link">booking@singhtourstravels.com</a>
+          <a href="tel:+88123123456" class="body-4 contact-link">Booking Request : +91-859-505-1278</a>
+          <p class="body-4">Open : 09:00 am - 10:00 pm</p>
+          <div class="wrapper">
+            <div class="separator"></div><div class="separator"></div><div class="separator"></div>
+          </div>
+          <p class="title-1">Get Updates Subscription</p>
+          <p class="label-1">Subscribe us & Get <span class="span">25% Off.</span></p>
+          <form action="" class="input-wrapper">
+            <div class="icon-wrapper">
+              <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+              <input type="email" name="email_address" placeholder="Your email" autocomplete="off" class="input-field">
+            </div>
+            <button type="submit" class="btn btn-secondary">
+              <span class="text text-1">Subscribe</span>
+              <span class="text text-2" aria-hidden="true">Subscribe</span>
+            </button>
+          </form>
+        </div>
+
+        <ul class="footer-list">
+          <li><a href="index.html" class="label-2 footer-link hover-underline">Home</a></li>
+          <li><a href="index.html#menu" class="label-2 footer-link hover-underline">Aarti Booking</a></li>
+          <li><a href="index.html#about" class="label-2 footer-link hover-underline">Festive Events</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">Transport</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">Blogs</a></li>
+        </ul>
+
+        <ul class="footer-list">
+          <li><a href="#" class="label-2 footer-link hover-underline">Facebook</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">Instagram</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">Twitter</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">Youtube</a></li>
+          <li><a href="#" class="label-2 footer-link hover-underline">Google Map</a></li>
+        </ul>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright">
+          &copy; 2024 Singh Pvt. Ltd. All Rights Reserved | Crafted by <a href="https://github.com/" target="_blank" class="link">Vaibhav Singh</a>
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <a href="#top" class="back-top-btn active" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+  </a>
+
+  <script>
+    /**
+     * PRELOADER
+     */
+    const preloader = document.querySelector("[data-preaload]");
+    window.addEventListener("load", function () {
+      preloader.classList.add("loaded");
+      document.body.classList.add("loaded");
+    });
+
+    /**
+     * NAVBAR TOGGLERS
+     */
+    const addEventOnElements = function (elements, eventType, callback) {
+      for (let i = 0, len = elements.length; i < len; i++) {
+        elements[i].addEventListener(eventType, callback);
+      }
+    }
+
+    const navbar = document.querySelector("[data-navbar]");
+    const navTogglers = document.querySelectorAll("[data-nav-toggler]");
+    const overlay = document.querySelector("[data-overlay]");
+
+    const toggleNavbar = function () {
+      document.body.classList.toggle("nav-active");
+      navbar.classList.toggle("active");
+      overlay.classList.toggle("active");
+    }
+
+    addEventOnElements(navTogglers, "click", toggleNavbar);
+
+    /**
+     * HEADER HIDE ON SCROLL
+     */
+    const header = document.querySelector("[data-header]");
+    let lastScrollPos = 0;
+
+    const hideHeader = function () {
+      const isScrollBottom = lastScrollPos < window.scrollY;
+      if (isScrollBottom) {
+        header.classList.add("hide");
+      } else {
+        header.classList.remove("hide");
+      }
+      lastScrollPos = window.scrollY;
+    }
+
+    window.addEventListener("scroll", function () {
+      if (window.scrollY >= 50) {
+        header.classList.add("active");
+        hideHeader();
+      } else {
+        header.classList.remove("active");
+      }
+    });
+
+    /**
+     * SCROLL REVEAL ANIMATION (Custom for Blog)
+     */
+    const revealElements = document.querySelectorAll(".reveal-card");
+
+    const scrollReveal = function () {
+      for (let i = 0; i < revealElements.length; i++) {
+        const elementDistanceFromTop = revealElements[i].getBoundingClientRect().top;
+        const revealPoint = 150;
+
+        if (elementDistanceFromTop < window.innerHeight - revealPoint) {
+          revealElements[i].classList.add("active");
+        }
+      }
+    }
+
+    window.addEventListener("scroll", scrollReveal);
+    window.addEventListener("load", scrollReveal); // Trigger once on load
+
+  </script>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
