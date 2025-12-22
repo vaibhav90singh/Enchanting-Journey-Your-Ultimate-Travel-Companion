@@ -21,10 +21,10 @@
 
   <style>
     /* --------------------------------------------------------------------------
-       1. VARIABLES & RESET (MATCHING YOUR ORIGINAL THEME)
+       1. VARIABLES & RESET (MATCHING ORIGINAL THEME)
        -------------------------------------------------------------------------- */
     :root {
-      /* Colors based on your Gold/Black theme */
+      /* Colors */
       --gold-1: #e4c590;
       --gold-2: #d8b780;
       --gold-3: #cca45e;
@@ -36,7 +36,7 @@
       --white-alpha-1: rgba(255, 255, 255, 0.1);
       --gray-1: #bababa;
       
-      /* Typography - Matching your index.html */
+      /* Typography */
       --font-heading: 'Forum', cursive;
       --font-body: 'DM Sans', sans-serif;
 
@@ -115,7 +115,7 @@
       margin-block: 10px;
     }
 
-    /* Button Styles - Matching your 'btn-primary' */
+    /* Button Styles */
     .btn {
       position: relative;
       background-color: transparent;
@@ -191,7 +191,6 @@
       z-index: 4;
       border-bottom: 1px solid transparent;
       transition: var(--transition-2);
-      background: var(--black-1);
     }
     .header.active {
       background-color: var(--black-1);
@@ -211,7 +210,7 @@
     .navbar-link .separator { display: none; } /* Hidden on desktop */
 
     /* Mobile Nav Handling */
-    .nav-open-btn, .close-btn, .overlay { display: none; } /* Simplified for this specific view */
+    .nav-open-btn, .close-btn, .overlay { display: none; } /* Simplified for this specific view, assuming desktop first but robust */
     @media (max-width: 992px) {
       .navbar {
         position: fixed; top: 0; right: -300px;
@@ -244,11 +243,11 @@
     .hero-bg-video {
       position: absolute;
       top: 0; left: 0;
-      width: 100%; height: 120%; /* Taller for Parallax */
+      width: 100%; height: 100%;
       object-fit: cover;
       opacity: 0.4;
       z-index: 0;
-      /* Using your hero slider image */
+      /* Fallback image if video not present */
       background: url('./assets/images/hero-slider-2.jpg') center/cover;
     }
 
@@ -346,7 +345,6 @@
     }
 
     .tab-btn {
-      background: none;
       color: var(--gray-1);
       font-size: 1.6rem;
       text-transform: uppercase;
@@ -354,7 +352,6 @@
       padding-bottom: 5px;
       border-bottom: 2px solid transparent;
       transition: var(--transition-1);
-      cursor: pointer;
     }
 
     .tab-btn:hover, .tab-btn.active {
@@ -651,6 +648,10 @@
           <ion-icon name="call-outline" style="color: var(--gold-1);"></ion-icon>
           <span>+91 859 505 1278</span>
         </a>
+        <a href="mailto:booking@singhtourstravels.com" style="display: flex; align-items: center; gap: 5px;">
+          <ion-icon name="mail-outline" style="color: var(--gold-1);"></ion-icon>
+          <span>Email Us</span>
+        </a>
       </div>
 
     </div>
@@ -669,12 +670,16 @@
           <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
         </button>
 
+        <a href="index.html" class="logo" style="margin-bottom: 50px; display: block;">
+          <img src="./assets/images/logo.svg" width="160" height="50" alt="Singh's Logo">
+        </a>
+
         <ul class="navbar-list">
           <li class="navbar-item"><a href="index.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Home</span></a></li>
-          <li class="navbar-item"><a href="index2.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Aarti Booking</span></a></li>
-          <li class="navbar-item"><a href="index3.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Festive Events</span></a></li>
-          <li class="navbar-item"><a href="index4.html" class="navbar-link hover-underline active"><div class="separator"></div><span class="span">Transports</span></a></li>
-          <li class="navbar-item"><a href="index5.html" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Blogs</span></a></li>
+          <li class="navbar-item"><a href="index.html#menu" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Aarti Booking</span></a></li>
+          <li class="navbar-item"><a href="index.html#about" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Festive Events</span></a></li>
+          <li class="navbar-item"><a href="#" class="navbar-link hover-underline active"><div class="separator"></div><span class="span">Transport</span></a></li>
+          <li class="navbar-item"><a href="#" class="navbar-link hover-underline"><div class="separator"></div><span class="span">Blogs</span></a></li>
         </ul>
       </nav>
 
@@ -1033,7 +1038,7 @@
 
         <div class="footer-brand">
           <a href="#" class="logo">
-            <img src="./assets/images/Vaibhav-Singh-1--unscreen.gif" width="160" height="50" loading="lazy" alt="Singh's Logo" style="margin: 0 auto 20px;">
+            <img src="./assets/images/Vaibhav Singh.gif" width="160" height="50" loading="lazy" alt="Singh's Logo" style="margin: 0 auto 20px;">
           </a>
           <address class="body-4" style="color: var(--gray-1); margin-bottom: 20px;">
             Kalkaji, New Delhi, Delhi - 110019
