@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuminaStream | Next-Gen Cinema</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #e50914;
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-main: #ffffff;
+            --text-dim: #b3b3b3;
+            --transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Scrollbar --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            transition: var(--transition);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 15px 5%;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            color: var(--primary);
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover { color: var(--text-main); }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 90vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.6);
+            transform: scale(1.1);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, var(--bg-dark) 10%, transparent 60%),
+                        linear-gradient(to top, var(--bg-dark), transparent 40%);
+        }
+
+        .hero-content {
+            max-width: 650px;
+            z-index: 10;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            line-height: 1;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            color: #46d369;
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 12px 35px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { transform: scale(1.05); background: #ff0f1b; }
+        .btn-secondary { background: var(--glass); color: white; backdrop-filter: blur(5px); }
+
+        /* --- Modular Grid/Slider --- */
+        .section-container {
+            padding: 40px 0;
+            position: relative;
+            z-index: 20;
+            margin-top: -100px;
+        }
+
+        .row {
+            margin-bottom: 40px;
+            padding-left: 5%;
+        }
+
+        .row-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .movie-list {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scroll-behavior: smooth;
+        }
+
+        .movie-list::-webkit-scrollbar { display: none; }
+
+        .movie-card {
+            min-width: 280px;
+            height: 160px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.2) translateY(-10px);
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-info {
+            position: absolute;
+            bottom: 0;
+            padding: 15px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            width: 100%;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .movie-card:hover .card-info { opacity: 1; }
+
+        /* --- Modular Detail View (Modal) --- */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+        }
+
+        .modal-content {
+            width: 90%;
+            max-width: 1000px;
+            background: var(--bg-card);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-body { padding: 40px; }
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: white;
+            z-index: 10;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal { animation: fadeIn 0.8s forwards; }
+
+    </style>
+</head>
+<body>
+
+    <nav id="mainNav">
+        <div class="logo">LUMINA</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Series</a></li>
+            <li><a href="#">Movies</a></li>
+            <li><a href="#">New & Popular</a></li>
+        </ul>
+        <div class="nav-actions">
+            <i class="fas fa-search" style="margin-right: 20px; cursor: pointer;"></i>
+            <i class="fas fa-bell" style="margin-right: 20px; cursor: pointer;"></i>
+            <img src="https://i.pravatar.cc/40" style="border-radius: 4px; cursor: pointer;">
+        </div>
+    </nav>
+
+    <section class="hero">
+        <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&q=80&w=2070" class="hero-bg" alt="Hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-meta">
+                <span>98% Match</span>
+                <span>2024</span>
+                <span style="border: 1px solid white; padding: 0 5px; font-size: 0.8rem;">16+</span>
+                <span>4 Seasons</span>
+            </div>
+            <h1>INTERSTELLAR VOYAGE</h1>
+            <p style="font-size: 1.1rem; color: var(--text-dim); margin-bottom: 30px;">
+                A team of explorers travel beyond this galaxy to discover whether mankind has a future among the stars in this breathtaking visual masterpiece.
+            </p>
+            <div class="hero-btns">
+                <button class="btn btn-primary"><i class="fas fa-play"></i> Play Now</button>
+                <button class="btn btn-secondary" onclick="openDetails()"><i class="fas fa-info-circle"></i> More Info</button>
+            </div>
+        </div>
+    </section>
+
+    <main class="section-container" id="content-main">
+        <div class="row">
+            <h2 class="row-title">Trending Now</h2>
+            <div class="movie-list" id="trending-list">
+                </div>
+        </div>
+
+        <div class="row">
+            <h2 class="row-title">Sci-Fi Blockbusters</h2>
+            <div class="movie-list" id="scifi-list">
+                </div>
+        </div>
+    </main>
+
+    <div class="modal" id="movieModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeDetails()">&times;</span>
+            <div style="height: 400px; width: 100%; background: #000;">
+                <img src="" id="modalImg" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="modal-body">
+                <h2 id="modalTitle" style="font-size: 2.5rem; margin-bottom: 10px;"></h2>
+                <p id="modalDesc" style="color: var(--text-dim); margin-bottom: 20px;"></p>
+                <button class="btn btn-primary">Resume Playback</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * MODULE: DATA ENGINE
+         * Mimics a database or API response
+         */
+        const movieData = {
+            trending: [
+                { id: 1, title: "Stranger Things", img: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=500", desc: "Small town secrets and supernatural forces." },
+                { id: 2, title: "The Witcher", img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500", desc: "Geralt of Rivia, a mutated monster-hunter for hire." },
+                { id: 3, title: "Dark", img: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=500", desc: "A family saga with a supernatural twist." },
+                { id: 4, title: "Cyberpunk", img: "https://images.unsplash.com/photo-1614728263952-84ea206f99b6?w=500", desc: "A street kid tries to survive in a technology-obsessed city." },
+                { id: 5, title: "The Crown", img: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=500", desc: "The political rivalries and romance of Queen Elizabeth II's reign." },
+                { id: 6, title: "Inception", img: "https://images.unsplash.com/photo-1535016120720-40c646be4480?w=500", desc: "Dreams within dreams." }
+            ],
+            scifi: [
+                { id: 7, title: "Dune", img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=500", desc: "Feature adaptation of Frank Herbert's science fiction novel." },
+                { id: 8, title: "Blade Runner", img: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=500", desc: "A young blade runner's discovery of a long-buried secret." },
+                { id: 9, title: "Arrival", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500", desc: "A linguist works with the military to communicate with alien lifeforms." }
+            ]
+        };
+
+        /**
+         * MODULE: RENDERER
+         * Handles the dynamic injection of UI components
+         */
+        const UI = {
+            renderMovies: (data, containerId) => {
+                const container = document.getElementById(containerId);
+                data.forEach(movie => {
+                    const card = document.createElement('div');
+                    card.className = 'movie-card';
+                    card.innerHTML = `
+                        <img src="${movie.img}" alt="${movie.title}">
+                        <div class="card-info">
+                            <h4>${movie.title}</h4>
+                            <p style="font-size: 0.7rem;">Action • 2h 15m</p>
+                        </div>
+                    `;
+                    card.onclick = () => UI.openModal(movie);
+                    container.appendChild(card);
+                });
+            },
+
+            openModal: (movie) => {
+                const modal = document.getElementById('movieModal');
+                document.getElementById('modalTitle').innerText = movie.title;
+                document.getElementById('modalDesc').innerText = movie.desc;
+                document.getElementById('modalImg').src = movie.img;
+                
+                modal.style.display = 'flex';
+                gsap.to(modal, { opacity: 1, duration: 0.5 });
+                gsap.from(".modal-content", { y: 100, opacity: 0, duration: 0.6, ease: "back.out" });
+            }
+        };
+
+        /**
+         * MODULE: ANIMATION ENGINE
+         */
+        const initAnimations = () => {
+            // Navbar Scroll Effect
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('mainNav');
+                if (window.scrollY > 50) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            });
+
+            // Hero Entrance
+            gsap.from(".hero-content > *", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: "power4.out"
+            });
+
+            gsap.to(".hero-bg", {
+                scrollTrigger: {
+                    trigger: ".hero",
+                    start: "top top",
+                    scrub: true
+                },
+                y: 150,
+                scale: 1.3
+            });
+        };
+
+        function closeDetails() {
+            const modal = document.getElementById('movieModal');
+            gsap.to(modal, { opacity: 0, duration: 0.3, onComplete: () => modal.style.display = 'none' });
+        }
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            UI.renderMovies(movieData.trending, 'trending-list');
+            UI.renderMovies(movieData.scifi, 'scifi-list');
+            initAnimations();
+        });
+    </script>
+</body>
+</html>
